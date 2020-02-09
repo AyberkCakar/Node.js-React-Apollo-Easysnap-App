@@ -1,0 +1,37 @@
+{
+  "name": "Node.js-React-Apollo-Easysnap-App",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon --ext js,graphql app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyberkCakar/Node.js-React-Apollo-Easysnap-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyberkCakar/Node.js-React-Apollo-Easysnap-App/issues"
+  },
+  "homepage": "https://github.com/AyberkCakar/Node.js-React-Apollo-Easysnap-App#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.10.0",
+    "bcrypt": "^3.0.8",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.6.0",
+    "graphql-import": "^1.0.0-beta.2",
+    "mongoose": "^5.8.11",
+    "react-script": "^2.0.5",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  }
+}
