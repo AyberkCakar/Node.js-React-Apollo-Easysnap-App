@@ -11,10 +11,16 @@ type User{
 }
 
 type Mutation{
-    createUser(data: CreateUserInput!): User
+    createUser(data: CreateUserInput!): Token
+    singIn(data: singinUserInput!): Token
 }
 
 input CreateUserInput{
     username: String!
     password: String!
+}
+
+input singinUserInput{
+username: String!
+password: String!
 }
