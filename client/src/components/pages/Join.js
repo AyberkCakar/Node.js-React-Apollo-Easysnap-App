@@ -1,26 +1,96 @@
 import React, {Component} from 'react';
+import { Mutation } from 'react-apollo';
 
-class Join extends Component{
-    render(){
-        return(
+import { CREATE_USER } from '../../queries';
+
+import Error from '../Error'
+
+const initialState = {
+    username: '',
+    password: '',
+    passwordConfirm: ''
+};
+
+class Join extends Component {
+    state = {
+        ...initialState
+    };
+
+    onChange = e => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value
+        })
+    };
+
+    formValidate = () => {          //Anlık form kontrolü yapılıyor textler dolu mu ve parolalar eşleşiyor mu -- hepsi tamam ise buton aktif oluyor.
+      const { username, password , passwordConfirm } = this.state;
+
+      const isInvalid = !username || !password || !passwordConfirm || password !== passwordConfirm;
+
+      return isInvalid;
+    };
+
+    resetState = () => {
+      this.setState({
+          ...initialState
+      })
+    };
+
+    onSubmit = (e, createUser) => {
+        e.preventDefault();
+        createUser().then(data => {
+            this.resetState();
+        })
+    };
+
+    render() {
+        const { username, password, passwordConfirm } = this.state;
+        return (
             <div>
-                <form className="user-form">
-                    <label>
-                        <input type="text" placeholder="username"/>
-                    </label>
-                    <label>
-                        <input type="password" placeholder="password"/>
-                    </label>
-                    <label>
-                        <input type="password" placeholder="confirm password"/>
-                    </label>
-                    <label>
-                        <button>Join</button>
-                    </label>
-                </form>
+                <Mutation mutation={CREATE_USER} variables={ { username, password } }>
+                    { (createUser, { loading, error } ) => (
+                        <form
+                            onSubmit={ e => {
+                                this.onSubmit(e, createUser)
+                            } }
+                            className="user-form">
+                            <label>
+                                <input
+                                    name="username"
+                                    onChange={this.onChange}
+                                    type="text"
+                                    value={username}
+                                    placeholder="username"/>
+                            </label>
+                            <label>
+                                <input
+                                    name="password"
+                                    onChange={this.onChange}
+                                    type="password"
+                                    value={password}
+                                    placeholder="password"/>
+                            </label>
+                            <label>
+                                <input
+                                    name="passwordConfirm"
+                                    onChange={this.onChange}
+                                    type="password"
+                                    value={passwordConfirm}
+                                    placeholder="confirm password"/>
+                            </label>
+                            <label>
+                                <button disabled={loading || this.formValidate() } >Join</button>
+                            </label>
+
+                            { loading && <div>loading...</div> }
+                            { error && <div> <Error error={error}/> </div> }
+                        </form>
+                    ) }
+                </Mutation>
             </div>
         );
-    };
+    }
 }
 
 export default Join;
