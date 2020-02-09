@@ -10,12 +10,14 @@ const typeDefs = importSchema("./graphql/schema.graphql");
 
 // models
 const User = require('./models/User');
+const Snap = require('./models/Snap');
 
 const server = new ApolloServer({
    typeDefs:typeDefs,
    resolvers,
    context: {
-       User
+       User,
+       Snap
    }
 });
 
