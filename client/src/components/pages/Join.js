@@ -26,9 +26,7 @@ class Join extends Component {
     formValidate = () => {          //Anlık form kontrolü yapılıyor textler dolu mu ve parolalar eşleşiyor mu -- hepsi tamam ise buton aktif oluyor.
       const { username, password , passwordConfirm } = this.state;
 
-      const isInvalid = !username || !password || !passwordConfirm || password !== passwordConfirm;
-
-      return isInvalid;
+      return (!username || !password || !passwordConfirm || password !== passwordConfirm);
     };
 
     resetState = () => {
