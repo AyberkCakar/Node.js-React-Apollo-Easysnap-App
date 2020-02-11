@@ -3,6 +3,6 @@ module.exports = {
         return await  new Snap({
             user_id,
             text
-        }).save();
-    }
+}).save();
+}
 };
