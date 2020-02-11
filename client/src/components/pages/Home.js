@@ -37,16 +37,44 @@ class Home extends Component{
         e.preventDefault();
 
         if (! this.formValidate()){
+            this.setState({
+                text: ''
+            });
             addSnap().then(({ data }) => {
-                this.setState({
-                    text: ''
-                })
             })
         }
     };
 
+    updateCache = (cache ,{data:{createSnap}} ) => {
+        const { snaps } = cache.readQuery({
+           query: GET_SNAPS
+        });
+
+        cache.writeQuery({
+            query: GET_SNAPS,
+            data: {
+                snaps: [createSnap, ...snaps ]
+            }
+        })
+    };
+
     render(){
         const { session } = this.props;
+
+        const optimisticResponse = {
+            __typename: "Mutation",
+            createSnap: {
+                __typename: "Snap",
+                id: Math.round(Math.random() * -200000 ),
+                text: this.state.text,
+                createdAt: new Date(),
+                user: {
+                    __typename: "User",
+                    ...session.activeUser
+                }
+            }
+        };
+
         return(
             <div>
                 <div className="description">
@@ -57,7 +85,8 @@ class Home extends Component{
                     <Mutation
                         mutation={ADD_SNAP}
                         variables={ { ...this.state } }
-                        refetchQueries = {[{ query: GET_SNAPS }]}
+                        update = {this.updateCache}
+                        optimisticResponse = { optimisticResponse }
                     >
                         {
                             (addSnap, {loading ,error}) => (
@@ -72,7 +101,7 @@ class Home extends Component{
                                         name="text"
                                         value={this.state.text}
                                         onChange={this.onChange}
-                                        disabled={!( session && session.activeUser )  || loading}
+                                        disabled={!( session && session.activeUser ) }
                                         placeholder={ session && session.activeUser ? 'add snap' : 'please login for add a new snap!' }/>
                                 </form>
                             )
@@ -91,14 +120,14 @@ class Home extends Component{
                                         <ul className="snaps">
                                             {
                                                 data.snaps.map(snap => (
-                                                    <li key={snap.id}>
+                                                    <li key={snap.id} className={snap.id < 0 ? 'optimistic' : ''}>
                                                         <div className="title">
                                                             <span className="username">@{ snap.user.username }  </span>
                                                             { snap.text }
                                                         </div>
                                                         <div className="date">
                                                         <span>
-                                                            <TimeAgo date={snap.createdAt}/>
+                                                            {snap.id < 0 ? 'sending...' : <TimeAgo date={snap.createdAt}/>}
                                                         </span>
                                                         </div>
                                                     </li>

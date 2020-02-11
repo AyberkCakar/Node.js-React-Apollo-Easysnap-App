@@ -58,6 +58,12 @@ export const ADD_SNAP = gql`
             user_id: $user_id 
             }) {
                 id
+                text
+                createdAt
+                user{   
+                    id
+                    username
+                }
             }
         }
 `;
