@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 
 import { SIGNIN_USER } from '../../queries';
@@ -33,10 +34,14 @@ class Login extends Component{
         })
     };
 
-    onSubmit = (e, signinUser) => {
+    onSubmit = (e, singIn) => {
         e.preventDefault();
-        signinUser().then(data => {
+        singIn().then( async ({data}) => {
+            console.log(data);
+            localStorage.setItem('token', data.singIn.token);
+            await this.props.refetch();
             this.resetState();
+            this.props.history.push('/');
         })
     };
 
@@ -45,10 +50,10 @@ class Login extends Component{
         return(
             <div>
                 <Mutation mutation={SIGNIN_USER} variables={ { username, password } }>
-                    { ( signinUser, { loading, error }) =>(
+                    { ( singIn, { loading, error }) =>(
                         <form
                             onSubmit={e => {
-                                this.onSubmit(e, signinUser)
+                                this.onSubmit(e, singIn)
                             }}
                             className="user-form">
                             <label>
@@ -81,4 +86,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);

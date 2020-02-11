@@ -1,12 +1,16 @@
+scalar Date
+
 type Query{
     user(id: ID!): User!
     users: [User!]!
+
+    activeUser: User
 }
 
 type User{
     id: ID!
-    name: String!
-    createdAt: String
+    username: String!
+    createdAt: Date
     snaps: [Snap!]!
 }
 
@@ -21,6 +25,6 @@ input CreateUserInput{
 }
 
 input singinUserInput{
-username: String!
-password: String!
+    username: String!
+    password: String!
 }

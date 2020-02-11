@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const { ApolloServer } =  require('apollo-server-express');
@@ -16,10 +17,11 @@ const Snap = require('./models/Snap');
 const server = new ApolloServer({
    typeDefs,
    resolvers,
-   context: {
+   context: ({ req }) => ({
        User,
-       Snap
-   }
+       Snap,
+       activeUser: req.activeUser
+   })
 });
 
 mongoose
@@ -28,6 +30,24 @@ mongoose
     .catch(e => console.log(e));
 
 const app = express();
+
+app.use( async (req, res, next) => {
+   const token = req.headers['authorization'];
+
+   if (token && token !=='null') {
+        try {
+            const activeUser = await jwt.verify(token, process.env.SECRET_KEY);
+            req.activeUser = activeUser;
+            console.log(activeUser);
+        }
+        catch (e) {
+            console.log(e);
+        }
+   }
+
+   next();
+});
+
 server.applyMiddleware(({ app }));
 
 app.listen({ port: 4001 }, () => {
