@@ -30,5 +30,5 @@ input singinUserInput{
 }
 
 type Subscription {
-    userAdded: User!
+    user: User!
 }

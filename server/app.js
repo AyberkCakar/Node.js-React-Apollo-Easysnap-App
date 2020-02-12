@@ -25,7 +25,9 @@ const server = new ApolloServer({
        Snap,
        pubsub,
        activeUser: req ? req.activeUser : null
-   })
+   }),
+    introspection: true,
+    playground: true,
 });
 
 mongoose
@@ -57,6 +59,6 @@ server.applyMiddleware(({ app }));
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-httpServer.listen({ port: 4001 }, () => {
+httpServer.listen(process.env.PORT || 4001, () => {
     console.log(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`);
 });

@@ -69,9 +69,9 @@ export const ADD_SNAP = gql`
 `;
 
 // Subscriptions
-export  const USER_CREATED = gql `
+export  const USER_CREATED = gql`
     subscription{
-        userAdded{
+        user{
             id
             username
         }
@@ -80,7 +80,7 @@ export  const USER_CREATED = gql `
 
 export const SNAP_CREATED = gql`
     subscription($userId: ID) {
-        snapAdded(userId: $userId) {
+        snap(userId: $userId) {
             id
             text
             createdAt

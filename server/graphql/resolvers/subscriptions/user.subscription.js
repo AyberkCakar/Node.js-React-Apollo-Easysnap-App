@@ -1,5 +1,5 @@
 module.exports = {
-    userAdded: {
+    user: {
         subscribe: (parent, args, { pubsub }) => pubsub.asyncIterator('user createad')
     }
 };
