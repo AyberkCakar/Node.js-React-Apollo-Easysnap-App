@@ -7,7 +7,7 @@ module.exports = {
             }).save();
 
             pubsub.publish('snap added', {
-               user:snap
+               snap:snap
             });
 
             return snap;
