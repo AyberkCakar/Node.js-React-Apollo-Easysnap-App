@@ -28,3 +28,7 @@ input singinUserInput{
     username: String!
     password: String!
 }
+
+type Subscription {
+    userAdded: User!
+}
