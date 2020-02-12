@@ -15,7 +15,7 @@ module.exports = {
       }).save();
 
       pubsub.publish('user createad',{
-          userAdded: newUser
+          user: newUser
       });
 
       return { token: token.generate(newUser, '1h') }
