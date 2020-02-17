@@ -15,7 +15,7 @@ import Header from './Header';
 import Home from './pages/Home/Home';
 import Login from './pages/Login';
 import Join from './pages/Join';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile/Profile';
 
 const Root = ( { refetch , session} ) => (
     <Router>

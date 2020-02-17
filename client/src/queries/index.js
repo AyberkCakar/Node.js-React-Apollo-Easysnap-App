@@ -51,6 +51,7 @@ export const GET_SNAPS = gql`
     }
 `;
 
+
 export const ADD_SNAP = gql`
     mutation($text: String!, $user_id: ID!) {
         createSnap(data: { 
@@ -79,8 +80,8 @@ export  const USER_CREATED = gql`
 `;
 
 export const SNAP_CREATED = gql`
-    subscription($userId: ID) {
-        snap(userId: $userId) {
+    subscription {
+        snap {
             id
             text
             createdAt
