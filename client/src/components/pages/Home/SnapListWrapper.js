@@ -19,7 +19,7 @@ class SnapListWrapper extends Component {
                     }
                 </ul>
 
-                <div className="counter">{data.snaps.length} snap(s)</div>
+                <div className="counter" >{data.snaps.length} snap(s)</div>
             </div>
         );
     }

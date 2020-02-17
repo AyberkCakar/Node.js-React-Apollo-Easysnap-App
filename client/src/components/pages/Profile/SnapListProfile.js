@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { GET_SNAPS, SNAP_CREATED } from '../../../queries/index';
 
-import SnapWrapper from './SnapWrapper';
+import SnapWrapperProfile from './SnapWrapperProfile';
 
 const SnapList = ({ session }) => (
     <div>
@@ -12,7 +12,7 @@ const SnapList = ({ session }) => (
                 if (error) return <div>Error.</div>;
 
                 return (
-                    <SnapWrapper
+                    <SnapWrapperProfile
                         subscribeToNewSnaps={() => {
                             subscribeToMore({
                                 document: SNAP_CREATED,
